@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
-const brandLogo = "https://res.cloudinary.com/dtbjdbbtk/image/upload/v1773299233/logo_smk_mdqcth.jpg";
+const brandLogo = "https://res.cloudinary.com/dtbjdbbtk/image/upload/v1773300091/amk_hd_vcbt23.jpg";
 
 const navItems = [
   { path: '/', label: 'Home' },

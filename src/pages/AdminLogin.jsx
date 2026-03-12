@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 
-const brandLogo = "https://res.cloudinary.com/dtbjdbbtk/image/upload/v1773299233/logo_smk_mdqcth.jpg";
+const brandLogo = "https://res.cloudinary.com/dtbjdbbtk/image/upload/v1773300091/amk_hd_vcbt23.jpg";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
