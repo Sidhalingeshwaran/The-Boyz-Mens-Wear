@@ -1,13 +1,16 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './context/AuthContext';
 import { ProductProvider } from './context/ProductContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import AdminRoute from './components/AdminRoute';
 import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import ContactPage from './pages/ContactPage';
+import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
 function AnimatedRoutes() {
@@ -28,8 +31,16 @@ function AnimatedRoutes() {
           <Route path="/shop/:category" element={<ShopPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route 
+            path="/admin/dashboard" 
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            } 
+          />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -38,25 +49,27 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <ProductProvider>
-      <Router>
-        <Navbar />
-        <AnimatedRoutes />
-        <Footer />
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: '#1a1a1a',
-              color: '#fff',
-              border: '1px solid #2a2a2a',
-              borderRadius: '12px',
-              fontSize: '0.9rem',
-            },
-          }}
-        />
-      </Router>
-    </ProductProvider>
+    <AuthProvider>
+      <ProductProvider>
+        <Router>
+          <Navbar />
+          <AnimatedRoutes />
+          <Footer />
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: '#1a1a1a',
+                color: '#fff',
+                border: '1px solid #2a2a2a',
+                borderRadius: '12px',
+                fontSize: '0.9rem',
+              },
+            }}
+          />
+        </Router>
+      </ProductProvider>
+    </AuthProvider>
   );
 }
 

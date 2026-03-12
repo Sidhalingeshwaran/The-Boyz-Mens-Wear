@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
-import brandLogo from '../assets/logo.svg';
+
+const brandLogo = "https://res.cloudinary.com/dtbjdbbtk/image/upload/v1773299233/logo_smk_mdqcth.jpg";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function AdminLogin() {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <img src={brandLogo} alt="Logo" style={{ height: 60, margin: '0 auto' }} />
+          <img src={brandLogo} alt="Logo" style={{ height: 60, margin: '0 auto', borderRadius: 8 }} />
         </div>
         <h1 className="auth-title">Admin Access</h1>
         <p className="auth-subtitle">Enter password to manage products</p>

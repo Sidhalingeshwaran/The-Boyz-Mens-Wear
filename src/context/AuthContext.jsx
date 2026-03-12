@@ -2,9 +2,6 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
-// Simple password-only admin auth
-const ADMIN_PASSWORD = 'theboyz2026';
-
 export function useAuth() {
   return useContext(AuthContext);
 }
@@ -13,10 +10,13 @@ export function AuthProvider({ children }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // Hardcoded simple password for admin access
+  const ADMIN_PASSWORD = 'theboyz2026';
+
   useEffect(() => {
-    // Check if already logged in via sessionStorage
-    const stored = sessionStorage.getItem('theboyz_admin');
-    if (stored === 'true') {
+    // Check session storage on load
+    const isAuth = sessionStorage.getItem('admin_auth') === 'true';
+    if (isAuth) {
       setIsAdmin(true);
     }
     setLoading(false);
@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
   const login = (password) => {
     if (password === ADMIN_PASSWORD) {
       setIsAdmin(true);
-      sessionStorage.setItem('theboyz_admin', 'true');
+      sessionStorage.setItem('admin_auth', 'true');
       return true;
     }
     return false;
@@ -33,11 +33,18 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setIsAdmin(false);
-    sessionStorage.removeItem('theboyz_admin');
+    sessionStorage.removeItem('admin_auth');
+  };
+
+  const value = {
+    isAdmin,
+    login,
+    logout,
+    loading
   };
 
   return (
-    <AuthContext.Provider value={{ isAdmin, loading, login, logout }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

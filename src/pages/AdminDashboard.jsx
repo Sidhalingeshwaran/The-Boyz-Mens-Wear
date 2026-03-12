@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { useProducts } from '../context/ProductContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiPlus, HiPencil, HiTrash } from 'react-icons/hi';
+import { HiPlus, HiPencil, HiTrash, HiLogout } from 'react-icons/hi';
 import ProductForm from '../components/ProductForm';
 import toast from 'react-hot-toast';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const { products, addProduct, updateProduct, deleteProduct } = useProducts();
   const [formLoading, setFormLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -54,6 +56,11 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/admin/login');
+  };
+
   const openEdit = (product) => {
     setEditingProduct(product);
     setShowForm(true);
@@ -81,6 +88,9 @@ export default function AdminDashboard() {
                 <HiPlus /> Add Product
               </button>
             )}
+            <button className="btn btn-outline" onClick={handleLogout}>
+              <HiLogout /> Logout
+            </button>
           </div>
         </div>
 
