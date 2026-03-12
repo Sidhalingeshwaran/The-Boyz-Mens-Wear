@@ -639,6 +639,10 @@ input, select, textarea {
     grid-template-columns: 1fr;
     gap: 32px;
   }
+  .product-detail-images {
+    position: relative !important;
+    top: auto !important;
+  }
 }
 
 .product-detail-images {
