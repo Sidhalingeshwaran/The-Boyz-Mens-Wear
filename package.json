@@ -1,0 +1,26 @@
+{
+  "name": "the-boys-mens-wear",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "homepage": "https://Sidhalingeshwaran.github.io/The-Boyz-Mens-Wear/",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "firebase": "^12.10.0",
+    "framer-motion": "^12.35.2",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.6.0",
+    "react-router-dom": "^7.13.1"
+  }
+}
