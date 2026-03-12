@@ -6,13 +6,19 @@ export default function ProductCard({ product, index = 0 }) {
   const navigate = useNavigate();
   const [selectedVariant, setSelectedVariant] = useState(0);
 
-  const discount = product.mrp && product.sellingPrice
-    ? Math.round(((product.mrp - product.sellingPrice) / product.mrp) * 100)
+  const mrp = Number(product?.mrp) || 0;
+  const sellingPrice = Number(product?.sellingPrice) || 0;
+
+  const discount = mrp && sellingPrice && mrp > sellingPrice
+    ? Math.round(((mrp - sellingPrice) / mrp) * 100)
     : 0;
 
-  const currentImage = product.variants && product.variants.length > 0
-    ? product.variants[selectedVariant]?.imageUrl
-    : product.primaryImage;
+  let currentImage = '/placeholder.jpg';
+  if (product?.variants && product.variants.length > 0 && product.variants[selectedVariant]?.imageUrl) {
+    currentImage = product.variants[selectedVariant].imageUrl;
+  } else if (product?.primaryImage) {
+    currentImage = product.primaryImage;
+  }
 
   const formatCategory = (cat) => {
     if (!cat) return '';

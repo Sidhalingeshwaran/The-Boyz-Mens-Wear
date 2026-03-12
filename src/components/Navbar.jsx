@@ -26,15 +26,21 @@ export default function Navbar() {
         </Link>
 
         <div className="nav-links">
-          {navItems.map(item => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={location.pathname === item.path ? 'active' : ''}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map(item => {
+            const isActive = item.path === '/' 
+              ? location.pathname === '/' 
+              : location.pathname.startsWith(item.path);
+
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={isActive ? 'active' : ''}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
         </div>
 
         <button
