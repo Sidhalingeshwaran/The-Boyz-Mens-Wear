@@ -8,6 +8,7 @@ const navItems = [
   { path: '/', label: 'Home' },
   { path: '/shop', label: 'Shop' },
   { path: '/contact', label: 'Contact' },
+  { path: '/admin', label: 'Admin' },
 ];
 
 export default function Navbar() {
