@@ -9,7 +9,9 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <img src={brandLogo} alt="The Boys Mens Wear" className="footer-logo" />
+            <Link to="/" onClick={() => window.scrollTo(0,0)}>
+              <img src={brandLogo} alt="The Boys Mens Wear" className="footer-logo" />
+            </Link>
             <p className="footer-description">
               Your destination for premium and affordable men&apos;s fashion.
               From sharp formals to laid-back casuals — dress bold, live bolder.

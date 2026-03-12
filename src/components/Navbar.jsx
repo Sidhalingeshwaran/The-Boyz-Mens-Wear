@@ -19,7 +19,7 @@ export default function Navbar() {
     <>
       <nav className="navbar">
         <div className="container">
-          <Link to="/" className="navbar-brand">
+          <Link to='/' className="navbar-brand" onClick={() => window.scrollTo(0,0)}>
             <img src={brandLogo} alt="The Boys Mens Wear" className="navbar-logo" />
             <span className="navbar-title">
               THE <span className="highlight">BOYZ</span>
