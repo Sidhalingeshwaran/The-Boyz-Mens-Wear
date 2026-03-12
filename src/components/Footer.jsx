@@ -18,6 +18,7 @@ export default function Footer() {
 
           <div>
             <h4 className="footer-heading">Quick Links</h4>
+            <div className="footer-links">
               <Link to="/">Home</Link>
               <Link to="/shop">Shop</Link>
               <Link to="/contact">Contact</Link>
