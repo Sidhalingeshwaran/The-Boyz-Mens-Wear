@@ -56,13 +56,19 @@ export default function ProductDetailPage() {
     );
   }
 
-  const discount = product.mrp && product.sellingPrice
-    ? Math.round(((product.mrp - product.sellingPrice) / product.mrp) * 100)
+  const mrp = Number(product?.mrp) || 0;
+  const sellingPrice = Number(product?.sellingPrice) || 0;
+
+  const discount = mrp && sellingPrice && mrp > sellingPrice
+    ? Math.round(((mrp - sellingPrice) / mrp) * 100)
     : 0;
 
-  const currentImage = product.variants && product.variants.length > 0
-    ? product.variants[selectedVariant]?.imageUrl
-    : product.primaryImage;
+  let currentImage = '/placeholder.jpg';
+  if (product?.variants && product.variants.length > 0 && product.variants[selectedVariant]?.imageUrl) {
+    currentImage = product.variants[selectedVariant].imageUrl;
+  } else if (product?.primaryImage) {
+    currentImage = product.primaryImage;
+  }
 
   const formatCategory = (cat) => {
     if (!cat) return '';
@@ -115,10 +121,10 @@ export default function ProductDetailPage() {
             <p className="product-detail-category">{formatCategory(product.category)}</p>
 
             <div className="product-detail-pricing">
-              <span className="detail-selling-price">₹{product.sellingPrice}</span>
-              {product.mrp > product.sellingPrice && (
+              <span className="detail-selling-price">₹{sellingPrice}</span>
+              {mrp > sellingPrice && (
                 <>
-                  <span className="detail-mrp">₹{product.mrp}</span>
+                  <span className="detail-mrp">₹{mrp}</span>
                   <span className="detail-discount">{discount}% off</span>
                 </>
               )}
