@@ -49,7 +49,7 @@ export default function Footer() {
             </div>
             <div className="footer-contact-item">
               <FaInstagram size={18} />
-              <a href="https://instagram.com/theboyzmenwear" target="_blank" rel="noreferrer">
+              <a href="https://www.instagram.com/the_boyz_menswear_?igsh=MTI0Z3Z5cTU4bnMzNQ==" target="_blank" rel="noreferrer">
                 The Boyz Menswear
               </a>
             </div>
