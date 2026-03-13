@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { HiMail, HiPhone, HiLocationMarker } from 'react-icons/hi';
 import { FaInstagram } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import emailjs from '@emailjs/browser';
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -15,12 +16,27 @@ export default function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    // For now just simulate submission — Firebase can be added later
-    setTimeout(() => {
+
+    try {
+      await emailjs.send(
+        'service_0x5bccj', // Service ID
+        'template_vvbucos', // Template ID
+        {
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        },
+        'ffSWpRxGcARNyapZt' // Public Key
+      );
+
       toast.success('Message sent successfully! We\'ll get back to you soon.');
       setForm({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Email JS Error:', error);
+      toast.error('Failed to send message. Please try again later.');
+    } finally {
       setSending(false);
-    }, 800);
+    }
   };
 
   return (
