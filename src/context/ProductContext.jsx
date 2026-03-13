@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { DEMO_PRODUCTS } from '../data/products';
+import { getAllProducts, addProduct as addProductService, updateProduct as updateProductService, deleteProduct as deleteProductService } from '../services/productService';
+import toast from 'react-hot-toast';
 
 const ProductContext = createContext();
 
@@ -11,42 +12,53 @@ export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Load from localStorage or use demo data
-    const stored = localStorage.getItem('theboyz_products');
-    if (stored) {
-      setProducts(JSON.parse(stored));
-    } else {
-      setProducts(DEMO_PRODUCTS);
-      localStorage.setItem('theboyz_products', JSON.stringify(DEMO_PRODUCTS));
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const data = await getAllProducts();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      toast.error("Failed to load products from database.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchProducts();
   }, []);
 
-  const saveProducts = (updated) => {
-    setProducts(updated);
-    localStorage.setItem('theboyz_products', JSON.stringify(updated));
+  const addProduct = async (data) => {
+    try {
+      const id = await addProductService(data);
+      const newProduct = { ...data, id, createdAt: new Date().toISOString() };
+      setProducts(prev => [newProduct, ...prev]);
+      return newProduct;
+    } catch (error) {
+      console.error("Error adding product:", error);
+      throw error;
+    }
   };
 
-  const addProduct = (data) => {
-    const newProduct = {
-      ...data,
-      id: 'prod_' + Date.now(),
-      createdAt: new Date().toISOString(),
-    };
-    const updated = [newProduct, ...products];
-    saveProducts(updated);
-    return newProduct;
+  const updateProduct = async (id, data) => {
+    try {
+      await updateProductService(id, data);
+      setProducts(prev => prev.map(p => p.id === id ? { ...p, ...data } : p));
+    } catch (error) {
+      console.error("Error updating product:", error);
+      throw error;
+    }
   };
 
-  const updateProduct = (id, data) => {
-    const updated = products.map(p => p.id === id ? { ...p, ...data } : p);
-    saveProducts(updated);
-  };
-
-  const deleteProduct = (id) => {
-    const updated = products.filter(p => p.id !== id);
-    saveProducts(updated);
+  const deleteProduct = async (id) => {
+    try {
+      await deleteProductService(id);
+      setProducts(prev => prev.filter(p => p.id !== id));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      throw error;
+    }
   };
 
   const getProductById = (id) => {
